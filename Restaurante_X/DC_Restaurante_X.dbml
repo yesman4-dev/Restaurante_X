@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RestaurantX" Class="DC_Restaurante_XDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=DESKTOP-MLNSSRR;Initial Catalog=RestaurantX;Integrated Security=True" SettingsObjectName="Restaurante_X.Properties.Settings" SettingsPropertyName="RestaurantXConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Municipio" Member="Municipio">
+    <Type Name="Municipio">
+      <Column Name="IdMunicipio" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Municipio" Member="Municipio1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="IdDepto" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Municipio_Empleado" Member="Empleado" ThisKey="IdMunicipio" OtherKey="IdMunicipio" Type="Empleado" />
+      <Association Name="Departamento_Municipio" Member="Departamento" ThisKey="IdDepto" OtherKey="IdDepto" Type="Departamento" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Departamento" Member="Departamento">
+    <Type Name="Departamento">
+      <Column Name="IdDepto" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Departamento" Member="Departamento1" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Association Name="Departamento_Municipio" Member="Municipio" ThisKey="IdDepto" OtherKey="IdDepto" Type="Municipio" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Sexo" Member="Sexo">
+    <Type Name="Sexo">
+      <Column Name="IdSexo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Sexo" Member="Sexo1" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Sexo_Empleado" Member="Empleado" ThisKey="IdSexo" OtherKey="IdSexo" Type="Empleado" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Cargo" Member="Cargo">
+    <Type Name="Cargo">
+      <Column Name="IdCargo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Cargo" Member="Cargo1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="Cargo_Empleado" Member="Empleado" ThisKey="IdCargo" OtherKey="IdCargo" Type="Empleado" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Empleado" Member="Empleado">
+    <Type Name="Empleado">
+      <Column Name="CodEmpleado" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IdEmpleado" Type="System.String" DbType="NVarChar(15)" CanBeNull="true" />
+      <Column Name="Nombre" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Apellido" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Direccion" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Telefono" Type="System.String" DbType="VarChar(9) NOT NULL" CanBeNull="false" />
+      <Column Name="IdMunicipio" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdCargo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdSexo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Empleado_Usuario" Member="Usuario" ThisKey="CodEmpleado" OtherKey="CodEmpleado" Type="Usuario" />
+      <Association Name="Cargo_Empleado" Member="Cargo" ThisKey="IdCargo" OtherKey="IdCargo" Type="Cargo" IsForeignKey="true" />
+      <Association Name="Municipio_Empleado" Member="Municipio" ThisKey="IdMunicipio" OtherKey="IdMunicipio" Type="Municipio" IsForeignKey="true" />
+      <Association Name="Sexo_Empleado" Member="Sexo" ThisKey="IdSexo" OtherKey="IdSexo" Type="Sexo" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TipoUsuario" Member="TipoUsuario">
+    <Type Name="TipoUsuario">
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TipoUsuario" Member="TipoUsuario1" Type="System.String" DbType="NChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="TipoUsuario_Usuario" Member="Usuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="Usuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadoUsuario" Member="EstadoUsuario">
+    <Type Name="EstadoUsuario">
+      <Column Name="IdEstadoUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EstadoUsuario" Member="EstadoUsuario1" Type="System.String" DbType="NChar(10) NOT NULL" CanBeNull="false" />
+      <Association Name="EstadoUsuario_Usuario" Member="Usuario" ThisKey="IdEstadoUsuario" OtherKey="IdEstadoUsuario" Type="Usuario" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Usuario" Member="Usuario">
+    <Type Name="Usuario">
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Usuario" Member="Usuario1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Contraseña" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="CodEmpleado" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdEstadoUsuario" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdTipoUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="Empleado_Usuario" Member="Empleado" ThisKey="CodEmpleado" OtherKey="CodEmpleado" Type="Empleado" IsForeignKey="true" />
+      <Association Name="EstadoUsuario_Usuario" Member="EstadoUsuario" ThisKey="IdEstadoUsuario" OtherKey="IdEstadoUsuario" Type="EstadoUsuario" IsForeignKey="true" />
+      <Association Name="TipoUsuario_Usuario" Member="TipoUsuario" ThisKey="IdTipoUsuario" OtherKey="IdTipoUsuario" Type="TipoUsuario" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Mesa" Member="Mesa">
+    <Type Name="Mesa">
+      <Column Name="IdMesa" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Mesa" Member="Mesa1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdEstadoMesa" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IdUsuario" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LogTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="EstadoMesa_Mesa" Member="EstadoMesa" ThisKey="IdEstadoMesa" OtherKey="IdEstadoMesa" Type="EstadoMesa" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.EstadoMesa" Member="EstadoMesa">
+    <Type Name="EstadoMesa">
+      <Column Name="IdEstadoMesa" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="EstadoMesa" Member="EstadoMesa1" Type="System.String" DbType="NChar(15) NOT NULL" CanBeNull="false" />
+      <Association Name="EstadoMesa_Mesa" Member="Mesa" ThisKey="IdEstadoMesa" OtherKey="IdEstadoMesa" Type="Mesa" />
+    </Type>
+  </Table>
+</Database>
